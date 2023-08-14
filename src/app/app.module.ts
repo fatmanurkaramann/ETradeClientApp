@@ -11,7 +11,8 @@ import { LayoutComponent } from './admin/layout/layout.component';
 @NgModule({
   declarations: [
     AppComponent,
-    LayoutComponent
+    LayoutComponent,
+
   ],
   imports: [
     BrowserModule,
