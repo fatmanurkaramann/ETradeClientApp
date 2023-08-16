@@ -1,3 +1,18 @@
 .list > a {
   cursor: pointer;
 }
+.menu-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: rgba(0, 0, 0, 0.87);
+  font-size: var(--mdc-list-list-item-label-text-size);
+  font-weight: var(--mdc-list-list-item-label-text-weight);
+  cursor: pointer; /* İsteğe bağlı: Fare imlecini el işareti olarak değiştirir */
+}
+
+

@@ -1,6 +1,14 @@
 <mat-list role="list" class="list">
   <a mat-list-item routerLink="/admin">Dashboard</a>
-  <a mat-list-item routerLink="/admin/products">Products</a>
+  <mat-list-item>
+    <button class="menu-trigger"  mat-button [matMenuTriggerFor]="menu" >Products</button>
+    <mat-menu #menu="matMenu" >
+      <button mat-menu-item  routerLink="/admin/products/create">Create Product</button>
+      <button mat-menu-item routerLink="/admin/products">List Product</button>
+    </mat-menu>
+  </mat-list-item>
+
+
   <a mat-list-item routerLink="/admin/customers">Customers</a>
   <a mat-list-item routerLink="/admin/orders">Orders</a>
   <a mat-list-item routerLink="/">See your site</a>

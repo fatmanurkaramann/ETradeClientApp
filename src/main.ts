@@ -55,6 +55,13 @@ bootstrapApplication(AppComponent, {
                 ).then((c) => c.ProductsComponent),
             },
             {
+              path: 'products/create',
+              loadComponent: () =>
+                import(
+                  './app/admin/components/products/create/create.component'
+                ).then((c) => c.CreateComponent),
+            },
+            {
               path: 'orders',
               loadComponent: () =>
                 import('./app/admin/components/orders/orders.component').then(
