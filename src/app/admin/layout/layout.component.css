@@ -1,6 +1,7 @@
 .admin-container {
-  width: 100%;
+  width: 90%;
   height: 100%;
-  margin: 10px;
+  margin-left: 60px;
+  margin-top: 10px;
   border: 1px solid #555;
 }

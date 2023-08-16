@@ -14,5 +14,8 @@
   font-weight: var(--mdc-list-list-item-label-text-weight);
   cursor: pointer; /* İsteğe bağlı: Fare imlecini el işareti olarak değiştirir */
 }
-
+.active
+{
+  background-color:rgba(0, 0, 0, 0.12);
+}
 

@@ -51,5 +51,5 @@ export class RequestParameters {
   action?: string;
   headers?: HttpHeaders;
   baseUrl?: string;
-  fullEndpoint?: string;
+  fullEndpoint?:string
 }
