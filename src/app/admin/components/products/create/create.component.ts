@@ -38,7 +38,7 @@ export class CreateComponent implements OnInit{
     const createProduct:CreateProduct = new CreateProduct()
     createProduct.name=name.value;
     createProduct.price=parseInt(price.value);
-    createProduct.stock=parseFloat(price.value);
+    createProduct.stock=parseFloat(stock.value);
 
     this.productService.createProduct(createProduct,()=>{
       this.toastr.message("Ürün Eklendi","",MessageType.Success);},

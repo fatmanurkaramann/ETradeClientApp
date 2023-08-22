@@ -51,8 +51,8 @@ bootstrapApplication(AppComponent, {
               path: 'products',
               loadComponent: () =>
                 import(
-                  './app/admin/components/products/products.component'
-                ).then((c) => c.ProductsComponent),
+                  './app/admin/components/products/list/list.component'
+                ).then((c) => c.ListComponent),
             },
             {
               path: 'products/create',
