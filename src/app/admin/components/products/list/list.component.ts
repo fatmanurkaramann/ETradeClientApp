@@ -8,10 +8,12 @@ import {
   CustomToastrService,
   MessageType,
 } from 'src/app/services/ui/custom-toastr.service';
+import { DeleteDirective } from 'src/app/directives/admin/delete.directive';
+declare var $:any;
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatPaginatorModule],
+  imports: [CommonModule, MatTableModule, MatPaginatorModule,DeleteDirective],
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css'],
 })
@@ -26,6 +28,8 @@ export class ListComponent implements OnInit {
     'stock',
     'createdDate',
     'updatedDate',
+    'delete',
+    'edit'
   ];
   dataSource: MatTableDataSource<ListProduct> = null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -52,5 +56,10 @@ export class ListComponent implements OnInit {
   async pageChanged() {
     await this.getProducts();
 
+  }
+  delete(id:any,event:any)
+  {
+    const btn:HTMLButtonElement = event.srcElement
+    $(btn.parentElement.parentElement).fadeOut(2000)
   }
 }
