@@ -28,8 +28,11 @@ export class ProductService {
     })
   }
 
-  async listProduct(succesCallBack?:()=>void,errorCallBack?:(errorMessage:string)=>void):Promise<ListProduct[]>{
-   const promiseData:Promise<ListProduct[]>=  this.httpClientService.get<ListProduct[]>({controller:"products"}).toPromise();
+  async listProduct(page:number=0,size:number=5,succesCallBack?:()=>void,errorCallBack?:(errorMessage:string)=>void):Promise<{totalCount:number,products: ListProduct[]}>{
+   const promiseData:Promise<{totalCount:number,products: ListProduct[]}>=  this.httpClientService.get<{totalCount:number,products: ListProduct[]}>({
+    controller:"products?",
+    queryString:`page=${page}&size=${size}`
+  }).toPromise();
 
    promiseData.then(d=>succesCallBack())
    .catch((error:HttpErrorResponse)=>{errorCallBack(error.error)})

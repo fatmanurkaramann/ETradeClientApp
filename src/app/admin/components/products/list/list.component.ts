@@ -15,18 +15,27 @@ import {
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css'],
 })
-export class ListComponent implements AfterViewInit, OnInit {
+export class ListComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private toastr: CustomToastrService
   ) {}
-  displayedColumns: string[] = ['name', 'price', 'stock','createdDate','updatedDate'];
+  displayedColumns: string[] = [
+    'name',
+    'price',
+    'stock',
+    'createdDate',
+    'updatedDate',
+  ];
   dataSource: MatTableDataSource<ListProduct> = null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-
-
   async ngOnInit() {
-    let response:any = await this.productService.listProduct(
+    this.getProducts();
+  }
+  async getProducts() {
+    let response: {totalCount:number,products: ListProduct[]} = await this.productService.listProduct(
+      this.paginator ? this.paginator.pageIndex : 0,
+      this.paginator ? this.paginator.pageSize : 5,
       () => {
         this.toastr.message('Ürünler listelendi', '', MessageType.Success);
       },
@@ -34,13 +43,14 @@ export class ListComponent implements AfterViewInit, OnInit {
         this.toastr.message('Ürünler listelenemedi', '', MessageType.Error);
       }
     );
-    let allProducts = response.products
+    let allProducts = response.products;
+    let total = response.totalCount;
     this.dataSource = new MatTableDataSource<ListProduct>(allProducts);
-    this.dataSource.paginator = this.paginator;
+    this.paginator.length = total;
 
   }
+  async pageChanged() {
+    await this.getProducts();
 
-  ngAfterViewInit(): void {
-   // this.dataSource.paginator = this.paginator;
   }
 }

@@ -25,7 +25,8 @@ export class HttpClientService {
     if (requestParameter.fullEndpoint) {
       url = requestParameter.fullEndpoint;
     } else {
-      url = `${this.url(requestParameter)}${id ? `/${id}` : ''}`;
+      url = `${this.url(requestParameter)}${id ? `/${id}` : ''}
+      ${requestParameter.queryString?`?${requestParameter.queryString}`:""}`;
     }
 
     return this.httpClient.get<T>(url, { headers: requestParameter.headers });
@@ -38,7 +39,7 @@ export class HttpClientService {
     if (requestParameter.fullEndpoint) {
       url = requestParameter.fullEndpoint;
     } else {
-      url = `${this.url(requestParameter)}`;
+      url = `${this.url(requestParameter)}${requestParameter.queryString ? `?${requestParameter.queryString}`:''}`;
     }
     return this.httpClient.post<T>(url, body, {
       headers: requestParameter.headers,
@@ -50,6 +51,7 @@ export class RequestParameters {
   controller?: string;
   action?: string;
   headers?: HttpHeaders;
+  queryString?:string;
   baseUrl?: string;
   fullEndpoint?:string
 }
