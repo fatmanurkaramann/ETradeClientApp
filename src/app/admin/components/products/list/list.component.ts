@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ListProduct } from 'src/app/contracts/list_product';
 import { ProductService } from 'src/app/services/common/models/product.service';
@@ -13,7 +14,7 @@ declare var $:any;
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatPaginatorModule,DeleteDirective],
+  imports: [CommonModule, MatTableModule, MatPaginatorModule,DeleteDirective,MatDialogModule],
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css'],
 })
@@ -62,4 +63,6 @@ export class ListComponent implements OnInit {
     const btn:HTMLButtonElement = event.srcElement
     $(btn.parentElement.parentElement).fadeOut(2000)
   }
+
 }
+
