@@ -11,6 +11,7 @@ import {
 } from 'src/app/services/ui/custom-toastr.service';
 import { DeleteDirective } from 'src/app/directives/admin/delete.directive';
 declare var $:any;
+
 @Component({
   selector: 'app-list',
   standalone: true,
@@ -23,6 +24,7 @@ export class ListComponent implements OnInit {
     private productService: ProductService,
     private toastr: CustomToastrService
   ) {}
+  products:string="products"
   displayedColumns: string[] = [
     'name',
     'price',
