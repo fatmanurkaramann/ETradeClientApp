@@ -1,6 +1,8 @@
 import { Directive, ElementRef, EventEmitter, HostListener, Input, Output, Renderer2 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { async } from 'rxjs';
 import { DeleteDialogComponent, DeleteState } from 'src/app/dialogs/delete-dialog/delete-dialog.component';
+import { DialogService } from 'src/app/services/common/dialog.service';
 import { HttpClientService } from 'src/app/services/common/http-client.service';
 import { ProductService } from 'src/app/services/common/models/product.service';
 declare var $: any;
@@ -13,7 +15,8 @@ export class DeleteDirective {
     private element: ElementRef,
     private _renderer: Renderer2,
     private httpClient: HttpClientService,
-    public dialog:MatDialog
+    public dialog:MatDialog,
+    private dialogService:DialogService
   ) {
     const btn = _renderer.createElement('button');
     btn.setAttribute('class', 'btn btn-danger');
@@ -25,7 +28,7 @@ export class DeleteDirective {
   @Output() callback:EventEmitter<any>=new EventEmitter()
   @HostListener('click')
   async onClick() {
-    this.openDialog(async ()=>{
+    this.dialogService.openDialog({component:DeleteDialogComponent,data:DeleteState.Yes,afterClosed:async ()=>{
       const td = this.element.nativeElement;
       // await this.productService.delete(this.id)
       //controlleri directivin kullanıldığı yerden almalıyız.
@@ -35,17 +38,7 @@ export class DeleteDirective {
         });
       })
 
-    })
-  }
-  openDialog(afterClosed:any): void {
-    const dialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: DeleteState.Yes,
-    });
+    }})
 
-    dialogRef.afterClosed().subscribe(result => {
-      if(result==DeleteState.Yes){
-       afterClosed()
-      }
-    });
   }
 }
