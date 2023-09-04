@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgxFileDropEntry, NgxFileDropModule } from 'ngx-file-drop';
+import { HttpClientService } from '../http-client.service';
+import { HttpHeaders } from '@angular/common/http';
+import { CustomToastrService, MessageType } from '../../ui/custom-toastr.service';
 @Component({
   selector: 'app-file-upload',
   standalone: true,
@@ -9,43 +12,40 @@ import { NgxFileDropEntry, NgxFileDropModule } from 'ngx-file-drop';
   styleUrls: ['./file-upload.component.css']
 })
 export class FileUploadComponent {
-  public files: NgxFileDropEntry[] = [];
+  /**
+   *
+   */
+  constructor(private httpClient:HttpClientService,private toastrService:CustomToastrService) {
 
+  }
+  public files: NgxFileDropEntry[]
+  @Input() options:Partial<FileUploadOptions>
   public dropped(files: NgxFileDropEntry[]) {
     this.files = files;
+    const formData = new FormData()
+
     for (const droppedFile of files) {
 
-      // Is it a file?
       if (droppedFile.fileEntry.isFile) {
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
         fileEntry.file((file: File) => {
-
-          // Here you can access the real file
           console.log(droppedFile.relativePath, file);
-
-          /**
-          // You could upload it like this:
-          const formData = new FormData()
-          formData.append('logo', file, relativePath)
-
-          // Headers
-          const headers = new HttpHeaders({
-            'security-token': 'mytoken'
-          })
-
-          this.http.post('https://mybackend.com/api/upload/sanitize-and-save-logo', formData, { headers: headers, responseType: 'blob' })
-          .subscribe(data => {
-            // Sanitized logo returned from backend
-          })
-          **/
-
+          formData.append(file.name, file, droppedFile.relativePath)
         });
       } else {
-        // It was a directory (empty directories are added, otherwise only files)
         const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
         console.log(droppedFile.relativePath, fileEntry);
       }
     }
+
+    this.httpClient.post({
+      controller:this.options.controller,
+      action:this.options.action,
+      queryString:this.options.queryString,
+      headers:new HttpHeaders({"responseType":"blob"})
+    },formData).subscribe(data=>{
+      this.toastrService.message("Dosya eklendi","",MessageType.Success)
+    })
   }
 
   public fileOver(event){
@@ -55,4 +55,13 @@ export class FileUploadComponent {
   public fileLeave(event){
     console.log(event);
   }
+
+}
+export class FileUploadOptions
+{
+  controller?:string;
+  action?:string;
+  queryString?:string;
+  explanation?:string;
+  accept?:string;
 }

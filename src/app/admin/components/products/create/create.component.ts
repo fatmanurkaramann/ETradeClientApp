@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormControl,
@@ -16,7 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { ProductService } from 'src/app/services/common/models/product.service';
 import { CreateProduct } from 'src/app/contracts/create_product';
 import { CustomToastrService, MessageType } from 'src/app/services/ui/custom-toastr.service';
-import { FileUploadComponent } from 'src/app/services/common/file-upload/file-upload.component';
+import { FileUploadComponent, FileUploadOptions } from 'src/app/services/common/file-upload/file-upload.component';
 @Component({
   selector: 'app-create',
   standalone: true,
@@ -25,12 +25,12 @@ import { FileUploadComponent } from 'src/app/services/common/file-upload/file-up
   styleUrls: ['./create.component.css']
 })
 export class CreateComponent implements OnInit{
-  /**
-   *
-   */
-  constructor(private productService:ProductService,private toastr:CustomToastrService) {
 
+  constructor(private productService:ProductService,private toastr:CustomToastrService)
+  {
   }
+  @Output() fileUploadOptions:Partial<FileUploadOptions>=
+  {controller:"products",action:"upload",explanation:"Resimleri sürükleyin veya seçin"}
   ngOnInit(): void {
 
   }
