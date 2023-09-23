@@ -6,11 +6,14 @@
         <div class="row">
           <div class="mb-3">
             <label for="userName" class="form-label">User Name</label>
-            <input type="text" formControlName="userName" class="form-control" id="userName" aria-describedby="emailHelp">
+            <input required  type="text" formControlName="userName" class="form-control" id="userName" >
+
           </div>
           <div class="mb-3">
             <label for="nameSurname" class="form-label">Name Surname</label>
-            <input type="test" class="form-control" formControlName="nameSurname" id="nameSurname" aria-describedby="emailHelp">
+            <input required type="text" class="form-control" formControlName="nameSurname" id="nameSurname"
+             [ngClass]="{'is-invalid':submitted && component.nameSurname.errors}" >
+            <div id="nameSurname" class="form-text" *ngIf="submitted && component.nameSurname.errors?.maxLength">50 karakterden fazla girilmez.</div>
           </div>
           <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Email address</label>
@@ -23,10 +26,12 @@
           </div>
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Password Again</label>
-            <input type="password" class="form-control" formControlName="passwordAgain"  id="exampleInputPassword1">
+            <input type="password" class="form-control" formControlName="passwordAgain"  id="exampleInputPassword1"
+            [ngClass]="{'is-invalid':submitted && component.passwordAgain.errors}">
+            <small *ngIf="submitted && frm.hasError('notSame')">Şifreyi doğrulayınız.</small>
           </div>
         </div>
-        <button type="submit" class="btn btn-primary">Sign in</button>
+        <button type="submit"  [disabled]="!frm.valid" class="btn btn-primary">Sign in</button>
       </form>
     </div>
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { User } from 'src/app/entities/user';
 
 @Component({
   selector: 'app-register',
@@ -14,16 +15,31 @@ export class RegisterComponent implements OnInit {
   frm: FormGroup;
   ngOnInit(): void {
     this.frm = this.formBuilder.group({
-      nameSurname: [''],
-      userName: [''],
-      email: [''],
-      password: [''],
-      passwordAgain: [''],
-    });
+      nameSurname: ['',[Validators.required,Validators.maxLength(5)]],
+      userName: ['',[Validators.required]],
+      email: ['',[Validators.required]],
+      password: ['',[Validators.required]],
+      passwordAgain: ['',[Validators.required]],
+    },{Validators:(group:AbstractControl): ValidationErrors | null =>{
+      let password = group.get("password").value;
+      let passwordAgain = group.get("passwordAgain").value;
+      return password===passwordAgain ? null : {notSame:true}
+    }});
   }
 
-  onSubmit(frm:any)
+  get component()
   {
-    console.log(frm)
+    return this.frm.controls;
+  }
+
+  submitted:boolean=false
+  onSubmit(frm:User)
+  {
+    console.log(this.frm.hasError('notSame'))
+    this.submitted=true
+    if(this.frm.invalid)
+    {
+      return;
+    }
   }
 }
