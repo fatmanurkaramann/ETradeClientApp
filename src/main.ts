@@ -24,6 +24,13 @@ bootstrapApplication(AppComponent, {
       ToastrModule.forRoot(),
       RouterModule.forRoot([
         {
+          path: 'sign-up',
+          loadComponent: () =>
+            import('./app/ui/components/register/register.component').then(
+              (c) => c.RegisterComponent
+            ),
+        },
+        {
           path: '',
           loadComponent: () =>
             import('./app/ui/components/home/home.component').then(
