@@ -64,6 +64,9 @@ export class RegisterComponent implements OnInit {
    if(result.succeded)
    {
     this.toastrService.message("Kullanıcı kaydı başarılı","",MessageType.Success)
+   }
+   else{
+    this.toastrService.message("Kullanıcı kaydı başarısız. Yeniden deneyin","",MessageType.Error)
 
    }
 
