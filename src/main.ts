@@ -31,6 +31,13 @@ bootstrapApplication(AppComponent, {
             ),
         },
         {
+          path: 'sign-in',
+          loadComponent: () =>
+            import('./app/ui/components/login/login.component').then(
+              (c) => c.LoginComponent
+            ),
+        },
+        {
           path: '',
           loadComponent: () =>
             import('./app/ui/components/home/home.component').then(
