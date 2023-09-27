@@ -4,12 +4,14 @@ import { User } from 'src/app/entities/user';
 import { Create_User } from 'src/app/contracts/users/create_user';
 import { Observable, firstValueFrom } from 'rxjs';
 import { Token } from 'src/app/contracts/token/token';
+import { CustomToastrService, MessageType } from '../../ui/custom-toastr.service';
+import { TokenResponse } from 'src/app/contracts/token/tokenReposnse';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  constructor(private httpClientService: HttpClientService) {}
+  constructor(private httpClientService: HttpClientService,private toastr:CustomToastrService) {}
 
   async create(user: User): Promise<Create_User> {
     try {
@@ -24,12 +26,17 @@ export class UserService {
       throw error;
     }
   }
-  async login(userNameOrEmail:string, password:string,callbackFunction?:()=>void) :Promise<any | Token> {
-   const obs = this.httpClientService.post<any | Token>(
+  async login(userNameOrEmail:string, password:string,callbackFunction?:()=>void) :Promise<any> {
+   const obs = this.httpClientService.post<any | TokenResponse>(
       { controller: 'users', action: 'login' },
       { userNameOrEmail, password }
     );
-   await firstValueFrom(obs)
+   const token = await firstValueFrom(obs) as TokenResponse
+   if(token)
+   {
+    localStorage.setItem("accessToken",token.token.accessToken)
+    this.toastr.message("Giriş başarılı","",MessageType.Success)
+   }
    callbackFunction();
   }
 
