@@ -12,12 +12,22 @@ import { AppComponent } from './app/app.component';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
+import { authGuard } from './app/guards/common/auth.guard';
+import { JwtModule } from '@auth0/angular-jwt';
 
 bootstrapApplication(AppComponent, {
   providers: [
     {provide:"baseUrl",useValue:"https://localhost:7127/api",multi:true},
     importProvidersFrom(
       CommonModule,
+      JwtModule.forRoot({
+        config:{
+          tokenGetter:()=>{
+            return localStorage.getItem("accessToken")
+          },
+          allowedDomains:["localhost:7127/"]
+        }
+      }),
       HttpClientModule,
       MatDialogModule,
       BrowserAnimationsModule, // required animations module
@@ -84,7 +94,7 @@ bootstrapApplication(AppComponent, {
                   (c) => c.OrdersComponent
                 ),
             },
-          ],
+          ],canActivate:[authGuard]
         },
       ])
     ),
