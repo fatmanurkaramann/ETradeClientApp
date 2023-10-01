@@ -22,4 +22,5 @@ export class LoginComponent implements OnInit {
       this.toastr.message("Giriş başarılı","",MessageType.Success)
     });
   }
+
 }

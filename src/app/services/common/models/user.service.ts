@@ -37,6 +37,10 @@ export class UserService {
     localStorage.setItem("accessToken",token.token.accessToken)
     this.toastr.message("Giriş başarılı","",MessageType.Success)
    }
+   else{
+    this.toastr.message("Giriş başarısız.Tekrar deneyiniz","",MessageType.Error)
+
+   }
    callbackFunction();
   }
 
