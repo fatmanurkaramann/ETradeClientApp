@@ -30,6 +30,8 @@
       <div class="d-flex">
         <button class="btn btn-outline-success mx-3" routerLink="sign-up" type="submit" *ngIf="!authService.isAuthenticated">Sign Up</button>
         <button class="btn btn-outline-success mx-3" routerLink="sign-in" type="submit" *ngIf="!authService.isAuthenticated">Sign In</button>
+        <button class="btn btn-outline-error mx-3" type="submit" (click)="signOut()" *ngIf="authService.isAuthenticated">Sign Out</button>
+
       </div>
 
 

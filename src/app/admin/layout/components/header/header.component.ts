@@ -13,4 +13,10 @@ export class HeaderComponent {
   constructor(public authService:AuthService) {
     authService.identityCheck();
   }
+
+  signOut()
+  {
+    localStorage.removeItem("accessToken")
+    this.authService.identityCheck();
+  }
 }
