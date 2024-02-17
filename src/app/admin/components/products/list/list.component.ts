@@ -54,6 +54,7 @@ export class ListComponent implements OnInit {
     let total = response.totalCount;
     this.dataSource = new MatTableDataSource<ListProduct>(allProducts);
     this.paginator.length = total;
+console.log(allProducts);
 
   }
   async pageChanged() {

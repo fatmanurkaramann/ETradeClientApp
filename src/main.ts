@@ -62,6 +62,13 @@ bootstrapApplication(AppComponent, {
             ),
         },
         {
+          path: 'products/:pageNo',
+          loadComponent: () =>
+            import('./app/ui/components/products/products.component').then(
+              (c) => c.ProductsComponent
+            ),
+        },
+        {
           path: 'admin',
           component: LayoutComponent,
           children: [

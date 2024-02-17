@@ -19,8 +19,8 @@ export class AuthService {
     _isAuthenticated = token != null && !expired;
   }
 
-  get isAuthenticated(): boolean {
+  get isAuthenticated(): boolean { //global değişkenin değerini döndürür.
     return _isAuthenticated;
   }
 }
-export let _isAuthenticated: boolean;
+export let _isAuthenticated: boolean; //global değişken
