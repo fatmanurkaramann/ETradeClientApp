@@ -14,7 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
 import { authGuard } from './app/guards/common/auth.guard';
 import { JwtModule } from '@auth0/angular-jwt';
-
+import { NgxSpinnerModule } from "ngx-spinner";
 bootstrapApplication(AppComponent, {
   providers: [
     {provide:"baseUrl",useValue:"https://localhost:7127/api",multi:true},
@@ -28,6 +28,7 @@ bootstrapApplication(AppComponent, {
           allowedDomains:["localhost:7127/"]
         }
       }),
+      NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' }),
       HttpClientModule,
       MatDialogModule,
       BrowserAnimationsModule, // required animations module
