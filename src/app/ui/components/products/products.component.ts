@@ -14,7 +14,7 @@ import { ProductService } from 'src/app/services/common/models/product.service';
 })
 export class ProductsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  products: ListProduct[]
+  products: any[]
   constructor(private productService: ProductService, private activatedRoute: ActivatedRoute) {
   }
   currentPage: number
@@ -22,8 +22,26 @@ export class ProductsComponent implements OnInit {
   totalPageCount: number
   pageSize: number = 12
   pageList: number[] = []
+  files:any
   async ngOnInit(): Promise<void> {
-    this.getProducts()
+    this.getProducts();
+    this.productService.listImages().subscribe(
+      (response:any) => {
+        this.files =  this.mergeFilesWithImagePaths(response);
+        console.log(this.files); // API'den gelen veriyi kullanabilirsiniz
+      },
+    );
+  }
+  private mergeFilesWithImagePaths(files: any[]): any[] {
+    return files.map((file) => {
+      const fileNameWithoutExtension = file.fileName.split('.')[0];
+      const encodedFileName = encodeURIComponent(file.fileName);
+      const imagePath = `/resources/files/${encodedFileName}.jpg`;
+      return {
+        ...file,
+        imagePath: imagePath,
+      };
+    });
   }
   getProducts() {
     this.activatedRoute.params.subscribe(async params => {

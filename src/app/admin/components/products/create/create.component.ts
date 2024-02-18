@@ -40,11 +40,25 @@ export class CreateComponent implements OnInit{
     createProduct.name=name.value;
     createProduct.price=parseInt(price.value);
     createProduct.stock=parseFloat(stock.value);
-
-    this.productService.createProduct(createProduct,()=>{
+    createProduct.file = this.selectedFile;
+    const formData = new FormData();
+    formData.append('name', createProduct.name);
+    formData.append('stock', createProduct.stock.toString());
+    formData.append('price', createProduct.price.toString());
+    formData.append('file', this.selectedFile);
+    this.productService.createProduct(formData,()=>{
       this.toastr.message("Ürün Eklendi","",MessageType.Success);},
       errorMessage=>{
       this.toastr.message(errorMessage,"",MessageType.Error);
     });
   }
-}
+  selectedFile: File | null = null;
+
+onFileSelected(event: any) {
+  const fileInput = event.target;
+  if (fileInput.files.length > 0) {
+    this.selectedFile = fileInput.files[0];
+    console.log(this.selectedFile);
+    
+  }
+}}

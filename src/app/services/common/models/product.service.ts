@@ -12,7 +12,7 @@ export class ProductService {
   constructor(private httpClientService: HttpClientService) {}
 
   createProduct(
-    product: CreateProduct,
+    product: any,
     succesCallBack?: any,
     errorCallBack?: any
   ) {
@@ -21,6 +21,8 @@ export class ProductService {
       .subscribe(
         (result) => {
           succesCallBack();
+          console.log(result);
+          
           alert('Başarılı');
         },
         (error: HttpErrorResponse) => {
@@ -35,18 +37,21 @@ export class ProductService {
         }
       );
   }
-
+  listImages() {
+    return this.httpClientService
+      .get<any>({ controller: 'products/images' });
+  }
   async listProduct(
     page: number = 0,
     size: number = 5,
     succesCallBack?: () => void,
     errorCallBack?: (errorMessage: string) => void
-  ): Promise<{ totalCount: number; products: ListProduct[] }> {
+  ): Promise<{ totalCount: number; products: any[] }> {
     const promiseData: Promise<{
       totalCount: number;
-      products: ListProduct[];
+      products: any[];
     }> = this.httpClientService
-      .get<{ totalCount: number; products: ListProduct[] }>({
+      .get<{ totalCount: number; products: any[] }>({
         controller: 'products',
         queryString: `page=${page}&size=${size}`,
       })
