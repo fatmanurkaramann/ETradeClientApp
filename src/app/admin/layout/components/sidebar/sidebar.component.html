@@ -1,16 +1,24 @@
-<mat-list role="list" class="list">
-  <a mat-list-item routerLink="/admin">Dashboard</a>
-  <mat-list-item>
-    <button [class.active]="isSubMenuActive"  class="menu-trigger" mat-button [matMenuTriggerFor]="menu" >Products</button>
-    <mat-menu #menu="matMenu" >
-      <button mat-menu-item [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }" routerLink="/admin/products/create">Create Product</button>
-      <button mat-menu-item [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }" routerLink="/admin/products">List Product</button>
-    </mat-menu>
-  </mat-list-item>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-2 col-md-2">
+      <div class="sidebar">
+        <div class="menu">
+          <ul>
+            <li><a routerLink="/admin">Anasayfa</a></li>
+            <li><a routerLink="/admin/products">Ürünler</a></li>
+            <li><a routerLink="/admin/products/create">Ürün Ekle</a></li>
+            <li><a routerLink="/admin/customers">Müşteriler</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-10">
+      <div class="content">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
 
 
-  <a mat-list-item routerLink="/admin/customers">Customers</a>
-  <a mat-list-item routerLink="/admin/orders">Orders</a>
-  <a mat-list-item routerLink="/">See your site</a>
 
-</mat-list>
+</div>
