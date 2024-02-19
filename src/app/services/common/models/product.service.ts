@@ -4,25 +4,26 @@ import { CreateProduct } from 'src/app/contracts/create_product';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ListProduct } from 'src/app/contracts/list_product';
 import { Observable, firstValueFrom } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
-  constructor(private httpClientService: HttpClientService) {}
+  constructor(private httpClientService: HttpClientService,private spinner:NgxSpinnerService,) {}
 
   createProduct(
     product: any,
     succesCallBack?: any,
     errorCallBack?: any
   ) {
+    this.spinner.show();
     this.httpClientService
       .post<CreateProduct>({ controller: 'products' }, product)
       .subscribe(
         (result) => {
           succesCallBack();
-          console.log(result);
-          
+          this.spinner.hide();
           alert('Başarılı');
         },
         (error: HttpErrorResponse) => {
@@ -47,6 +48,7 @@ export class ProductService {
     succesCallBack?: () => void,
     errorCallBack?: (errorMessage: string) => void
   ): Promise<{ totalCount: number; products: any[] }> {
+    this.spinner.show();
     const promiseData: Promise<{
       totalCount: number;
       products: any[];
@@ -56,7 +58,7 @@ export class ProductService {
         queryString: `page=${page}&size=${size}`,
       })
       .toPromise();
-
+      this.spinner.hide();
     promiseData
       .then((d) => succesCallBack())
       .catch((error: HttpErrorResponse) => {

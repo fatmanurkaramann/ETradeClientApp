@@ -1,21 +1,21 @@
-<div class="container mt-3">
+<div class="container">
+  <div class="row"></div>
   <div class="row">
     <div class="col-md-3"></div>
-    <div class="col-md-6">
-        <div class="row">
-          <div class="mb-3">
-            <label for="userName" class="form-label">User Name or Email</label>
-            <input #userNameOrEmail required type="text" formControlName="userName" class="form-control" id="userName"
-  >
+    <div class="col-md-6 mt-5">
+      <div class="row">
+        <div class="mb-3">
+          <label for="userName" class="form-label">User Name or Email</label>
+          <input #userNameOrEmail required type="text" formControlName="userName" class="form-control" id="userName">
 
-          </div>
-          <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input #password type="password" class="form-control" formControlName="password"
-            id="exampleInputPassword1">
-          </div>
         </div>
-        <button type="submit" class="btn btn-primary" (click)="login(userNameOrEmail.value,password.value)">Sign in</button>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input #password type="password" class="form-control" formControlName="password" id="exampleInputPassword1">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary" (click)="login(userNameOrEmail.value,password.value)">Sign
+        in</button>
     </div>
 
   </div>
