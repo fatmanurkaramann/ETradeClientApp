@@ -3,7 +3,8 @@
     <div class="col-md-12 mt-5">
       <div class="card mt-3 " style="width: 18rem;float:left;margin:5px;" *ngFor="let item of products">
         <div class="card-body">
-          <img [src]="'data:image/jpg;base64,'+item.path" alt="File Image" width="100">
+          <img [src]="'data:image/jpg;base64,'+item.path" alt="File Image" width="100" [routerLink]="['/product-detail', item.id]"
+        >
 
           <h2 class="card-text">{{item.name}}</h2>
           <p class="card-text">{{item.price}} TL - Stok adedi : {{item.stock}}</p>

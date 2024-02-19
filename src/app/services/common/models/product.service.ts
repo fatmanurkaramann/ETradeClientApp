@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClientService } from '../http-client.service';
 import { CreateProduct } from 'src/app/contracts/create_product';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ListProduct } from 'src/app/contracts/list_product';
 import { Observable, firstValueFrom } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -10,7 +10,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
   providedIn: 'root',
 })
 export class ProductService {
-  constructor(private httpClientService: HttpClientService,private spinner:NgxSpinnerService,) {}
+  constructor(private httpClientService: HttpClientService,private spinner:NgxSpinnerService,private _http:HttpClient) {}
 
   createProduct(
     product: any,
@@ -37,6 +37,15 @@ export class ProductService {
           errorCallBack(message);
         }
       );
+  }
+  detailProduct(
+    productId: any,
+  ) {
+    this.spinner.show();
+    const url = `https://localhost:7127/api/Products/detail?Id=${productId}`;
+    return this._http
+      .get<any>(url)
+      
   }
   listImages() {
     return this.httpClientService

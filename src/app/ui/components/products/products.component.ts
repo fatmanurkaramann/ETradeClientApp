@@ -55,8 +55,12 @@ export class ProductsComponent implements OnInit {
       this.products = response.products
       this.totalProductCount = response.totalCount
       this.totalPageCount = Math.ceil(this.totalProductCount / this.pageSize)
+      console.log(this.products);
+      
       this.pageList = []
-
+      this.products.map(p=>{
+        viewTransitionName: `view-transition-name:p-${p.id}`
+      })
       if (this.currentPage - 3 <= 0) {
         for (let i = 1; i <= 7; i++) {
           this.pageList.push(i)
