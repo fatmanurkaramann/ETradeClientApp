@@ -10,12 +10,13 @@ import {
   MessageType,
 } from 'src/app/services/ui/custom-toastr.service';
 import { DeleteDirective } from 'src/app/directives/admin/delete.directive';
+import { NgxSpinnerComponent, NgxSpinnerModule } from 'ngx-spinner';
 declare var $:any;
 
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatPaginatorModule,DeleteDirective,MatDialogModule],
+  imports: [CommonModule, MatTableModule, MatPaginatorModule,DeleteDirective,MatDialogModule,NgxSpinnerModule],
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css'],
 })
@@ -54,8 +55,6 @@ export class ListComponent implements OnInit {
     let total = response.totalCount;
     this.dataSource = new MatTableDataSource<ListProduct>(allProducts);
     this.paginator.length = total;
-console.log(allProducts);
-
   }
   async pageChanged() {
     await this.getProducts();

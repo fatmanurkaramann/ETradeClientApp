@@ -6,19 +6,22 @@ import { Observable, firstValueFrom } from 'rxjs';
 import { Token } from 'src/app/contracts/token/token';
 import { CustomToastrService, MessageType } from '../../ui/custom-toastr.service';
 import { TokenResponse } from 'src/app/contracts/token/tokenReposnse';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  constructor(private httpClientService: HttpClientService,private toastr:CustomToastrService) {}
+  constructor(private httpClientService: HttpClientService,private toastr:CustomToastrService,private spinner:NgxSpinnerService) {}
 
   async create(user: User): Promise<Create_User> {
     try {
+      this.spinner.show();
       const obs: Observable<Create_User | User> = this.httpClientService.post<
         Create_User | User
       >({ controller: 'users' }, user);
       const response = (await firstValueFrom(obs)) as Create_User;
+      this.spinner.hide();
       console.log('API Response:', response);
       return response;
     } catch (error) {

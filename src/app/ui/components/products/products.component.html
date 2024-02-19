@@ -5,10 +5,9 @@
         <div class="card-body">
           <img [src]="'data:image/jpg;base64,'+item.path" alt="File Image" width="100">
 
-          <h5 class="card-title">{{item.name}}</h5>
-          <p class="card-text">{{item.price}} TL</p>
-          <p class="card-text">Stok adedi : {{item.stock}}</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
+          <h2 class="card-text">{{item.name}}</h2>
+          <p class="card-text">{{item.price}} TL - Stok adedi : {{item.stock}}</p>
+          <a href="#" class="btn btn-success">Satın Al</a>
         </div>
       </div>
     </div>
@@ -16,8 +15,7 @@
  
 
   <div class="row">
-    <footer aria-label="Page navigation example" style="  left: 0;
-        bottom: 0;">
+    <footer aria-label="Page navigation example" style="  left: 0;bottom: 0;position: fixed;width: 100%;background-color: white;">
       <ul class="pagination">
         <li class="page-item"><a class="page-link"
             [routerLink]="['/products',currentPage-1 <= 0?1:currentPage-1]" >Previous</a></li>

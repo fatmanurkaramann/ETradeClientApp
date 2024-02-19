@@ -28,7 +28,6 @@ export class ProductsComponent implements OnInit {
     this.productService.listImages().subscribe(
       (response:any) => {
         this.files =  this.mergeFilesWithImagePaths(response);
-        console.log(this.files); // API'den gelen veriyi kullanabilirsiniz
       },
     );
   }

@@ -8,7 +8,6 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import {ErrorStateMatcher} from '@angular/material/core';
 import {NgIf} from '@angular/common';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -29,8 +28,6 @@ export class CreateComponent implements OnInit{
   constructor(private productService:ProductService,private toastr:CustomToastrService)
   {
   }
-  @Output() fileUploadOptions:Partial<FileUploadOptions>=
-  {controller:"products",action:"upload",explanation:"Resimleri sürükleyin veya seçin"}
   ngOnInit(): void {
 
   }
@@ -58,7 +55,5 @@ onFileSelected(event: any) {
   const fileInput = event.target;
   if (fileInput.files.length > 0) {
     this.selectedFile = fileInput.files[0];
-    console.log(this.selectedFile);
-    
   }
 }}
