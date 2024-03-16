@@ -1,7 +1,7 @@
-<div class="container">
+<div class="container" style="z-index: 1;">
   <div class="row" style="max-width: 100%;width: 100%;">
     <div class="col-md-12 mt-5">
-      <div class="card mt-3 " style="width: 18rem;float:left;margin:5px;" *ngFor="let item of products">
+      <div class="card mt-5 " style="width: 18rem;float:left;margin:5px;" *ngFor="let item of products">
         <div class="card-body">
           <img [src]="'data:image/jpg;base64,'+item.path" alt="File Image" width="100" [routerLink]="['/product-detail', item.id]"
         >

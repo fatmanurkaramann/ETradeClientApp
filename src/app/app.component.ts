@@ -21,7 +21,6 @@ export class AppComponent {
    *
    */
   constructor(private toastr:CustomToastrService) {
-   this.toastr.message("Merhaba","",MessageType.Success);
 
   }
 }

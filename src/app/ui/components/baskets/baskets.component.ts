@@ -3,7 +3,8 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-baskets',
   templateUrl: './baskets.component.html',
-  styleUrls: ['./baskets.component.css']
+  styleUrls: ['./baskets.component.css'],
+  standalone: true,
 })
 export class BasketsComponent {
 
