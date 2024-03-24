@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClientService } from '../http-client.service';
 import { CreateProduct } from 'src/app/contracts/create_product';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { ListProduct } from 'src/app/contracts/list_product';
 import { Observable, firstValueFrom } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -18,8 +18,12 @@ export class ProductService {
     errorCallBack?: any
   ) {
     this.spinner.show();
+    const token = localStorage.getItem('accessToken');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
     this.httpClientService
-      .post<CreateProduct>({ controller: 'products' }, product)
+      .post<CreateProduct>({ controller: 'products',headers:headers }, product)
       .subscribe(
         (result) => {
           succesCallBack();
@@ -57,6 +61,10 @@ export class ProductService {
     succesCallBack?: () => void,
     errorCallBack?: (errorMessage: string) => void
   ): Promise<{ totalCount: number; products: any[] }> {
+    const token = localStorage.getItem('accessToken');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
     this.spinner.show();
     const promiseData: Promise<{
       totalCount: number;
@@ -65,6 +73,7 @@ export class ProductService {
       .get<{ totalCount: number; products: any[] }>({
         controller: 'products',
         queryString: `page=${page}&size=${size}`,
+        headers:headers
       })
       .toPromise();
       this.spinner.hide();

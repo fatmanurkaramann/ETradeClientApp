@@ -44,6 +44,13 @@ const appRoutes: Routes = [{
     ),
 },
 {
+  path: 'baskets',
+  loadComponent: () =>
+    import('./app/ui/components/baskets/baskets.component').then(
+      (c) => c.BasketsComponent
+    ),
+},
+{
   path: 'product-detail/:id',
   loadComponent: () =>
     import('./app/ui/components/products/product-detail/product-detail.component').then(
@@ -60,6 +67,7 @@ const appRoutes: Routes = [{
 {
   path: 'admin',
   component: LayoutComponent,
+  canActivate: [authGuard],
   children: [
     { path: '', component: DashboardComponent },
     {
@@ -90,7 +98,7 @@ const appRoutes: Routes = [{
           (c) => c.OrdersComponent
         ),
     },
-  ],canActivate:[authGuard]
+  ]
 }];
 bootstrapApplication(AppComponent, {
   providers: [

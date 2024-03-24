@@ -2,8 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { ActivatedRoute, RouterModule } from '@angular/router';
+import { AddBasketItem } from 'src/app/contracts/basket/add-basket-item';
 import { ListProduct } from 'src/app/contracts/list_product';
+import { BasketService } from 'src/app/services/common/models/basket.service';
 import { ProductService } from 'src/app/services/common/models/product.service';
+import { CustomToastrService, MessageType } from 'src/app/services/ui/custom-toastr.service';
 
 @Component({
   selector: 'app-products',
@@ -15,7 +18,8 @@ import { ProductService } from 'src/app/services/common/models/product.service';
 export class ProductsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   products: any[]
-  constructor(private productService: ProductService, private activatedRoute: ActivatedRoute) {
+  constructor(private productService: ProductService, private activatedRoute: ActivatedRoute,private basketService:BasketService,
+    private _toastrService:CustomToastrService) {
   }
   currentPage: number
   totalProductCount: number
@@ -76,5 +80,13 @@ export class ProductsComponent implements OnInit {
         }
     })
 
+  }
+  async addToBasket(product:ListProduct)
+  {
+    let basketItem = new AddBasketItem();
+    basketItem.productId = product.id;
+    basketItem.quantity = 1
+    await this.basketService.add(basketItem)
+    this._toastrService.message("Ürün sepete eklendi.","",MessageType.Success)
   }
 }

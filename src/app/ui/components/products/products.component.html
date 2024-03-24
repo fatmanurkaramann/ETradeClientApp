@@ -8,7 +8,7 @@
 
           <h2 class="card-text">{{item.name}}</h2>
           <p class="card-text">{{item.price}} TL - Stok adedi : {{item.stock}}</p>
-          <a href="#" class="btn btn-success">Satın Al</a>
+          <a (click)="addToBasket(item)" class="btn btn-success">Sepete Ekle</a>
         </div>
       </div>
     </div>

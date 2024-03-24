@@ -1,4 +1,4 @@
 export class AddBasketItem {
-  productId: number;
+  productId: string;
   quantity: number;
 }
