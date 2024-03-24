@@ -33,11 +33,12 @@ export class BasketService {
 
     return firstValueFrom(observable);
   }
-  async delete(basketItemId: string): Promise<void> {
+  async delete(id: string): Promise<void> {
+    console.log(id);
+    
     const observable: Observable<any> = this.httpClient.delete({
       controller: 'baskets',
-      queryString: basketItemId
-    },);
+    },id);
     return firstValueFrom(observable);
   }
 }
