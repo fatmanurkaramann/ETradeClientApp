@@ -10,7 +10,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
   providedIn: 'root',
 })
 export class ProductService {
-  constructor(private httpClientService: HttpClientService,private spinner:NgxSpinnerService,private _http:HttpClient) {}
+  constructor(private httpClientService: HttpClientService, private spinner: NgxSpinnerService, private _http: HttpClient) { }
 
   createProduct(
     product: any,
@@ -18,12 +18,8 @@ export class ProductService {
     errorCallBack?: any
   ) {
     this.spinner.show();
-    const token = localStorage.getItem('accessToken');
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
     this.httpClientService
-      .post<CreateProduct>({ controller: 'products',headers:headers }, product)
+      .post<CreateProduct>({ controller: 'products' }, product)
       .subscribe(
         (result) => {
           succesCallBack();
@@ -49,7 +45,7 @@ export class ProductService {
     const url = `https://localhost:7127/api/Products/detail?Id=${productId}`;
     return this._http
       .get<any>(url)
-      
+
   }
   listImages() {
     return this.httpClientService
@@ -61,10 +57,6 @@ export class ProductService {
     succesCallBack?: () => void,
     errorCallBack?: (errorMessage: string) => void
   ): Promise<{ totalCount: number; products: any[] }> {
-    const token = localStorage.getItem('accessToken');
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
     this.spinner.show();
     const promiseData: Promise<{
       totalCount: number;
@@ -73,10 +65,9 @@ export class ProductService {
       .get<{ totalCount: number; products: any[] }>({
         controller: 'products',
         queryString: `page=${page}&size=${size}`,
-        headers:headers
       })
       .toPromise();
-      this.spinner.hide();
+    this.spinner.hide();
     promiseData
       .then((d) => succesCallBack())
       .catch((error: HttpErrorResponse) => {

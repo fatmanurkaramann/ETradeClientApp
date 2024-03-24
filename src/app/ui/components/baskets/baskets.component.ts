@@ -1,37 +1,42 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ListBasketItem } from 'src/app/contracts/basket/list-basket-item/list-basket-item';
+import { UpdateBasketItem } from 'src/app/contracts/basket/list-basket-item/update-basket-item';
+import { BasketService } from 'src/app/services/common/models/basket.service';
 const ELEMENT_DATA: any[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-
+  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
+  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
 ];
 @Component({
   selector: 'app-baskets',
   templateUrl: './baskets.component.html',
   styleUrls: ['./baskets.component.css'],
   standalone: true,
-  imports: [CommonModule,MatTableModule],
+  imports: [CommonModule, MatTableModule],
 })
 
-export class BasketsComponent {
-  
+export class BasketsComponent implements OnInit {
+  basketItem: ListBasketItem[]
   displayedColumns: string[] = ['productName', 'productQuantity', 'productPrice'];
-  dataSource = ELEMENT_DATA
+  constructor(private _basketSerivce: BasketService, private spinner: NgxSpinnerService) {
+  }
+  async ngOnInit(): Promise<void> {
+    this.spinner.show()
+    this.basketItem = await this._basketSerivce.getBasket()
+    console.log(this.basketItem);
+    this.spinner.hide()
+  }
+  async changeQuantity(event: any) {
+    this.spinner.show()
+    const basketItemId = event.target.getAttribute("data-id");
+    console.log(basketItemId);
+    const quantity: number = event.target.value;
+    let updateBasket: UpdateBasketItem = new UpdateBasketItem()
+    updateBasket.basketItemId = basketItemId
+    updateBasket.quantity = quantity
+    await this._basketSerivce.put(updateBasket)
+    this.spinner.hide()
+  }
 }

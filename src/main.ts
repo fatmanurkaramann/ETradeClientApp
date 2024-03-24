@@ -10,11 +10,12 @@ import {
 } from '@angular/platform-browser/animations';
 import { AppComponent } from './app/app.component';
 import { ToastrModule } from 'ngx-toastr';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
 import { authGuard } from './app/guards/common/auth.guard';
 import { JwtModule } from '@auth0/angular-jwt';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { AuthInterceptor } from './app/interceptors/auth.interceptor';
 const appRoutes: Routes = [{
   path: 'sign-up',
   loadComponent: () =>
@@ -103,7 +104,11 @@ const appRoutes: Routes = [{
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(appRoutes, withViewTransitions()),
-    {provide:"baseUrl",useValue:"https://localhost:7127/api",multi:true},
+    {provide:"baseUrl",useValue:"https://localhost:7127/api",multi:true},   {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
     importProvidersFrom(
       CommonModule,
       JwtModule.forRoot({
