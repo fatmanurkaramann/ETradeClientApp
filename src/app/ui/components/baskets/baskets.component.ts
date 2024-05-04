@@ -28,7 +28,6 @@ export class BasketsComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.spinner.show()
     this.basketItem = await this._basketSerivce.getBasket()
-    console.log(this.basketItem);
     this.spinner.hide()
   }
   async changeQuantity(event: any) {

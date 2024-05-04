@@ -33,13 +33,6 @@ const appRoutes: Routes = [{
 {
   path: '',
   loadComponent: () =>
-    import('./app/ui/components/home/home.component').then(
-      (c) => c.HomeComponent
-    ),
-},
-{
-  path: 'products',
-  loadComponent: () =>
     import('./app/ui/components/products/products.component').then(
       (c) => c.ProductsComponent
     ),
