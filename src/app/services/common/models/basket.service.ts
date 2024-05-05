@@ -34,8 +34,6 @@ export class BasketService {
     return firstValueFrom(observable);
   }
   async delete(id: string): Promise<void> {
-    console.log(id);
-    
     const observable: Observable<any> = this.httpClient.delete({
       controller: 'baskets',
     },id);
