@@ -19,10 +19,10 @@ export class SignalrService {
 
       hubConnection.start().then(() => {
         console.log("Reconnected")
-        this._connection = hubConnection
       }).catch(err => setTimeout(() => {
         this.start(hubUrl)
       }, 2000))
+      this._connection = hubConnection
     }
     this._connection.onreconnected(connectionId => {
       console.log("Reconnected");
@@ -31,11 +31,12 @@ export class SignalrService {
     })
     this._connection.onclose(error => console.log("Close reconnection")
     )
+
   }
   invoke(procedureName: string, message: any, successCallback?: (value) => void, errorCallback?: (error) => void) {
     this.connection.invoke(procedureName, message).then(successCallback).catch(errorCallback)
   }
-  on(procedureName:string,callback:(...message)=>void) {
-    this.connection.on(procedureName,callback)
+  on(procedureName: string, callback: (...message) => void) {
+    this.connection.on(procedureName, callback)
   }
 }

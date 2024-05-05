@@ -1,9 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 import { MatTableModule } from '@angular/material/table';
+import { SignalrService } from 'src/app/services/common/signalr.service';
 export interface PeriodicElement {
   name: string;
   position: number;
@@ -27,13 +28,18 @@ const ELEMENT_DATA: PeriodicElement[] = [
   imports: [NgxSpinnerModule, NgChartsModule, MatTableModule]
 })
 
-export class DashboardComponent {
+export class DashboardComponent implements OnInit{
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource = ELEMENT_DATA;
   private newLabel? = 'New label';
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
-  constructor() {
-
+  constructor(private signalrService:SignalrService) {
+    signalrService.start("https://localhost:44342/product-hub")
+  }
+  ngOnInit(): void {
+    this.signalrService.on("receiveProductAddedMessage",message=>{
+      alert(message)
+    })
   }
 
   public lineChartData: ChartConfiguration['data'] = {
