@@ -97,7 +97,7 @@ const appRoutes: Routes = [{
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(appRoutes, withViewTransitions()),
-    {provide:"baseUrl",useValue:"https://localhost:7127/api",multi:true},   {
+    {provide:"baseUrl",useValue:"https://localhost:44342/api",multi:true},   {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
@@ -109,7 +109,7 @@ bootstrapApplication(AppComponent, {
           tokenGetter:()=>{
             return localStorage.getItem("accessToken")
           },
-          allowedDomains:["localhost:7127/"]
+          allowedDomains:["localhost:44342/"]
         }
       }),
       NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' }),

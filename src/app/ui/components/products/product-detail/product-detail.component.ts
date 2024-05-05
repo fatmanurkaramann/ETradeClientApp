@@ -19,15 +19,12 @@ productDetails: any;
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.productId = params['id'];
-      console.log(this.productId);
-      
       this.getProductDetails();
     });
   }
   getProductDetails() {
     this._productService.detailProduct(this.productId).subscribe((response) => { 
       this.productDetails = response;
-      console.log(response);
       this._spinner.hide();
     });
   }

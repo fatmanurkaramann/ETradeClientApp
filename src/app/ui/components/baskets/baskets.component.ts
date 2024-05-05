@@ -33,7 +33,6 @@ export class BasketsComponent implements OnInit {
   async changeQuantity(event: any) {
     this.spinner.show()
     const basketItemId = event.target.getAttribute("data-id");
-    console.log(basketItemId);
     const quantity: number = event.target.value;
     let updateBasket: UpdateBasketItem = new UpdateBasketItem()
     updateBasket.basketItemId = basketItemId
