@@ -8,10 +8,6 @@ import { UpdateBasketItem } from 'src/app/contracts/basket/list-basket-item/upda
 import { BasketService } from 'src/app/services/common/models/basket.service';
 import {MatIconModule} from '@angular/material/icon';
 declare var $:any
-const ELEMENT_DATA: any[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-];
 @Component({
   selector: 'app-baskets',
   templateUrl: './baskets.component.html',
@@ -19,7 +15,6 @@ const ELEMENT_DATA: any[] = [
   standalone: true,
   imports: [CommonModule, MatTableModule,MatButtonModule,MatIconModule],
 })
-
 export class BasketsComponent implements OnInit {
   basketItem: ListBasketItem[]
   displayedColumns: string[] = ['productName', 'productQuantity', 'productPrice','delete'];

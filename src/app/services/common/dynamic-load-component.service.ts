@@ -8,7 +8,7 @@ export class DynamicLoadComponentService {
   //viewları clear etmek gerekir.
   //componentFactory:Componentlerin instancelarını oluşturmak için kullanılan nesnedir.
   //componentFactoryResolver:Belirli component için component factoryi reseoolve eden sınıftır.
-  constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
+  constructor() { }
   async loadComponent(component: ComponentName, viewContainerRef: ViewContainerRef) {
     let _component: any = null
     switch (component) {
@@ -19,7 +19,7 @@ export class DynamicLoadComponentService {
         break;
     }
     viewContainerRef.clear();
-    return viewContainerRef.createComponent(this.componentFactoryResolver.resolveComponentFactory(_component))
+    return viewContainerRef.createComponent(_component)
   }
 }
 export enum ComponentName {
