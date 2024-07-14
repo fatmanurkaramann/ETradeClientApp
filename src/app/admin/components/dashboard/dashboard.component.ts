@@ -35,9 +35,14 @@ export class DashboardComponent implements OnInit{
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
   constructor(private signalrService:SignalrService) {
     signalrService.start("https://localhost:44342/product-hub")
+    signalrService.start("https://localhost:44342/order-hub")
   }
   ngOnInit(): void {
     this.signalrService.on("receiveProductAddedMessage",message=>{
+      alert(message)
+    })
+
+    this.signalrService.on("receiveOrderAddedMessage",message=>{
       alert(message)
     })
   }

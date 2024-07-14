@@ -6,19 +6,26 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ListBasketItem } from 'src/app/contracts/basket/list-basket-item/list-basket-item';
 import { UpdateBasketItem } from 'src/app/contracts/basket/list-basket-item/update-basket-item';
 import { BasketService } from 'src/app/services/common/models/basket.service';
-import {MatIconModule} from '@angular/material/icon';
-declare var $:any
+import { MatIconModule } from '@angular/material/icon';
+import { OrderService } from 'src/app/services/common/models/order.service';
+import { CreateOrder } from 'src/app/contracts/order/create_order';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+declare var $: any
 @Component({
   selector: 'app-baskets',
   templateUrl: './baskets.component.html',
   styleUrls: ['./baskets.component.css'],
   standalone: true,
-  imports: [CommonModule, MatTableModule,MatButtonModule,MatIconModule],
+  imports: [CommonModule, MatTableModule, MatButtonModule, MatIconModule],
 })
 export class BasketsComponent implements OnInit {
   basketItem: ListBasketItem[]
-  displayedColumns: string[] = ['productName', 'productQuantity', 'productPrice','delete'];
-  constructor(private _basketSerivce: BasketService, private spinner: NgxSpinnerService) {
+  displayedColumns: string[] = ['productName', 'productQuantity', 'productPrice', 'delete'];
+  constructor(private _basketSerivce: BasketService, private spinner: NgxSpinnerService,
+    private _orderService: OrderService, private toastr: ToastrService,
+    private router: Router
+  ) {
   }
   async ngOnInit(): Promise<void> {
     this.spinner.show()
@@ -35,13 +42,12 @@ export class BasketsComponent implements OnInit {
     await this._basketSerivce.put(updateBasket)
     this.spinner.hide()
   }
-  async deleteBasketItem(id:any)
-  {
+  async deleteBasketItem(id: any) {
     this.spinner.show()
     await this._basketSerivce.delete(id)
-    var a = $(".column-"+id)
-    var elements = $(".column-"+id);
-  
+    var a = $(".column-" + id)
+    var elements = $(".column-" + id);
+
     // Silinen satırın sınıfını içeren her bir elementi yavaşça kaybolması için döngü ile işle
     elements.each((index, element) => {
       $(element).parent().fadeOut(500, () => {
@@ -49,5 +55,15 @@ export class BasketsComponent implements OnInit {
         this.spinner.hide();
       });
     });
+  }
+  async shoppingCompleted() {
+    this.spinner.show()
+    const order: CreateOrder = new CreateOrder()
+    order.address = "Bartın"
+    order.description = "test"
+    await this._orderService.create(order)
+    this.spinner.hide()
+    this.toastr.success("Siparişiniz alınmıştır!")
+    this.router.navigate(["/"])
   }
 }
