@@ -6,17 +6,14 @@ import { BaseDialog } from '../base/base-dialog';
 @Component({
   selector: 'app-delete-dialog',
   standalone: true,
-  imports: [CommonModule,  MatButtonModule,MatDialogModule],
+  imports: [CommonModule,MatButtonModule,MatDialogModule],
   templateUrl: './delete-dialog.component.html',
   styleUrls: ['./delete-dialog.component.css']
 })
-/**
- *
- */
 
 export class DeleteDialogComponent extends BaseDialog<DeleteDialogComponent>{
   constructor( dialogRef: MatDialogRef<DeleteDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DeleteState,) {
+    @Inject(MAT_DIALOG_DATA) public data: DeleteState) {
     super(dialogRef); //BaseDialogun ctoru parametreli olduğu için
   }
 

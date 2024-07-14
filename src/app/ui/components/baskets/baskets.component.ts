@@ -11,6 +11,9 @@ import { OrderService } from 'src/app/services/common/models/order.service';
 import { CreateOrder } from 'src/app/contracts/order/create_order';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { DialogService } from 'src/app/services/common/dialog.service';
+import { BasketItemDeleteState, BasketItemRemoveDialogComponent } from 'src/app/dialogs/basket-item-remove-dialog/basket-item-remove-dialog.component';
+import { ShoppinComplete, ShoppingCompleteDialogComponent } from 'src/app/dialogs/shopping-complete-dialog/shopping-complete-dialog.component';
 declare var $: any
 @Component({
   selector: 'app-baskets',
@@ -24,7 +27,7 @@ export class BasketsComponent implements OnInit {
   displayedColumns: string[] = ['productName', 'productQuantity', 'productPrice', 'delete'];
   constructor(private _basketSerivce: BasketService, private spinner: NgxSpinnerService,
     private _orderService: OrderService, private toastr: ToastrService,
-    private router: Router
+    private router: Router, private dialogService: DialogService
   ) {
   }
   async ngOnInit(): Promise<void> {
@@ -42,28 +45,38 @@ export class BasketsComponent implements OnInit {
     await this._basketSerivce.put(updateBasket)
     this.spinner.hide()
   }
-  async deleteBasketItem(id: any) {
-    this.spinner.show()
-    await this._basketSerivce.delete(id)
-    var a = $(".column-" + id)
-    var elements = $(".column-" + id);
+  deleteBasketItem(id: any) {
+    this.dialogService.openDialog({
+      component: BasketItemRemoveDialogComponent, data: BasketItemDeleteState.Yes, afterClosed: async () => {
+        this.spinner.show()
+        await this._basketSerivce.delete(id)
+        var a = $(".column-" + id)
+        var elements = $(".column-" + id);
 
-    // Silinen satırın sınıfını içeren her bir elementi yavaşça kaybolması için döngü ile işle
-    elements.each((index, element) => {
-      $(element).parent().fadeOut(500, () => {
-        $(element).parent().remove(); // Satırın kendisini sil
-        this.spinner.hide();
-      });
-    });
+        // Silinen satırın sınıfını içeren her bir elementi yavaşça kaybolması için döngü ile işle
+        elements.each((index, element) => {
+          $(element).parent().fadeOut(500, () => {
+            $(element).parent().remove(); // Satırın kendisini sil
+            this.spinner.hide();
+          });
+        });
+      }
+    })
+
   }
   async shoppingCompleted() {
-    this.spinner.show()
-    const order: CreateOrder = new CreateOrder()
-    order.address = "Bartın"
-    order.description = "test"
-    await this._orderService.create(order)
-    this.spinner.hide()
-    this.toastr.success("Siparişiniz alınmıştır!")
-    this.router.navigate(["/"])
+    this.dialogService.openDialog({
+      component: ShoppingCompleteDialogComponent, data: ShoppinComplete.Yes, afterClosed: async () => {
+        this.spinner.show()
+        const order: CreateOrder = new CreateOrder()
+        order.address = "Bartın"
+        order.description = "test"
+        await this._orderService.create(order)
+        this.spinner.hide()
+        this.toastr.success("Siparişiniz alınmıştır!")
+        this.router.navigate(["/"])
+      }
+    })
+
   }
 }
