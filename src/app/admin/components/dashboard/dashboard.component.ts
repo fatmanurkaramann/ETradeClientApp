@@ -28,21 +28,19 @@ const ELEMENT_DATA: PeriodicElement[] = [
   imports: [NgxSpinnerModule, NgChartsModule, MatTableModule]
 })
 
-export class DashboardComponent implements OnInit{
+export class DashboardComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource = ELEMENT_DATA;
   private newLabel? = 'New label';
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
-  constructor(private signalrService:SignalrService) {
-    signalrService.start("https://localhost:44342/product-hub")
-    signalrService.start("https://localhost:44342/order-hub")
+  constructor(private signalrService: SignalrService) {
   }
   ngOnInit(): void {
-    this.signalrService.on("receiveProductAddedMessage",message=>{
+    this.signalrService.on("https://localhost:44342/product-hub", "receiveProductAddedMessage", message => {
       alert(message)
     })
 
-    this.signalrService.on("receiveOrderAddedMessage",message=>{
+    this.signalrService.on("https://localhost:44342/order-hub", "receiveOrderAddedMessage", message => {
       alert(message)
     })
   }

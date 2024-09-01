@@ -1,47 +1,47 @@
+<div class="modal-content" style="z-index: 1;">
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Sepetim</h5>
+    <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
 
+  </div>
+  <div class="modal-body">
+    <div class="mat-elevation-z8" style="overflow-y: scroll;">
+      <table mat-table [dataSource]="basketItem">
+        <ng-container matColumnDef="productName">
+          <th mat-header-cell *matHeaderCellDef> Ürün </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="productQuantity">
+          <th mat-header-cell *matHeaderCellDef> Fiyat </th>
+          <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+        </ng-container>
+        <ng-container matColumnDef="productPrice">
+          <th mat-header-cell *matHeaderCellDef> Adet </th>
+          <td mat-cell *matCellDef="let element">
+            <input type="number" [value]="element.quantity" [attr.data-id]="element.id"
+              (change)="changeQuantity($event)">
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="delete">
+          <th mat-header-cell *matHeaderCellDef> Sil </th>
+          <td mat-cell *matCellDef="let element" [ngClass]="'column-' + element.id">
+            <div class="example-button-container">
+              <button mat-mini-fab aria-label="Example icon button with a home icon"
+                (click)="deleteBasketItem(element.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
 
-      <div class="modal-content" style="z-index: 1;">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Sepetim</h5>
-          <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
 
-        </div>
-        <div class="modal-body" >
-            <div class="mat-elevation-z8"  style="overflow-y: scroll;">
-                <table mat-table  [dataSource]="basketItem" >
-                <ng-container matColumnDef="productName" >
-                  <th mat-header-cell *matHeaderCellDef > Ürün </th>
-                  <td mat-cell *matCellDef="let element" > {{element.name}} </td>
-                </ng-container>
-                <ng-container matColumnDef="productQuantity">
-                  <th mat-header-cell *matHeaderCellDef> Fiyat </th>
-                  <td mat-cell *matCellDef="let element"> {{element.price}} </td>
-                </ng-container>
-                <ng-container matColumnDef="productPrice">
-                  <th mat-header-cell *matHeaderCellDef> Adet </th> 
-                  <td mat-cell *matCellDef="let element">
-                    <input type="number" [value]="element.quantity" [attr.data-id]="element.id" (change)="changeQuantity($event)">
-                  </td>
-                </ng-container>
-                <ng-container matColumnDef="delete">
-                  <th mat-header-cell *matHeaderCellDef> Sil </th> 
-                  <td mat-cell *matCellDef="let element" [ngClass]="'column-' + element.id">
-                    <div class="example-button-container">
-                      <button mat-mini-fab aria-label="Example icon button with a home icon" (click)="deleteBasketItem(element.id)">
-                        <mat-icon>delete</mat-icon>
-                      </button>
-                    </div>
-                  </td>
-                </ng-container>
-              
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-              </table></div>
-            
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
-          <button type="button" class="btn btn-primary" (click)="shoppingCompleted()">Alışverişi Tamamla</button>
-        </div>
-      </div>
-   
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+    <button type="button" class="btn btn-primary" (click)="shoppingCompleted()">Alışverişi Tamamla</button>
+  </div>
+</div>
